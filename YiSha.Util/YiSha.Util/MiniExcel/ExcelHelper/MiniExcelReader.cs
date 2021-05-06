@@ -22,6 +22,7 @@ namespace YiSha.Util.MiniExcel.ExcelHelper
             using (var stream = File.OpenRead(absoluteFilePath))
             {
                 var rows = stream.Query<ClockingInModel>("考勤", ExcelType.XLSX).ToList();
+                rows = rows.Where(e => !string.IsNullOrEmpty(e.Name) & e.JobNumber != 0).ToList();
                 return rows;
             }
         }
@@ -37,6 +38,7 @@ namespace YiSha.Util.MiniExcel.ExcelHelper
             using (var stream = File.OpenRead(absoluteFilePath))
             {
                 var rows = stream.Query<JobOvertimeModel>("加班", ExcelType.XLSX).ToList();
+                rows = rows.Where(e => !string.IsNullOrEmpty(e.Name) & e.JobNumber != 0).ToList();
                 return rows;
             }
         }
@@ -53,6 +55,7 @@ namespace YiSha.Util.MiniExcel.ExcelHelper
             using (var stream = File.OpenRead(absoluteFilePath))
             {
                 var rows = stream.Query<LeaveForPersonalAffairsModel>("年假同一天工时", ExcelType.XLSX).ToList();
+                rows = rows.Where(e => !string.IsNullOrEmpty(e.Name) & e.JobNumber != 0).ToList();
                 return rows;
             }
         }
@@ -69,6 +72,7 @@ namespace YiSha.Util.MiniExcel.ExcelHelper
             using (var stream = File.OpenRead(absoluteFilePath))
             {
                 var rows = stream.Query<SameWorkingHourForAnnualLeaveModel>("事假", ExcelType.XLSX).ToList();
+                rows = rows.Where(e => !string.IsNullOrEmpty(e.Name) & e.JobNumber != 0).ToList();
                 return rows;
             }
         }
@@ -85,6 +89,7 @@ namespace YiSha.Util.MiniExcel.ExcelHelper
             using (var stream = File.OpenRead(absoluteFilePath))
             {
                 var rows = stream.Query<SickLeaveModel>("病假", ExcelType.XLSX).ToList();
+                rows = rows.Where(e => !string.IsNullOrEmpty(e.Name) & e.JobNumber != 0).ToList();
                 return rows;
             }
         }

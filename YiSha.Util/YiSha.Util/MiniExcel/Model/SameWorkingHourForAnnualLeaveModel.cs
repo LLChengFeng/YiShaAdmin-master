@@ -16,7 +16,7 @@ namespace YiSha.Util.MiniExcel.Model
         [ExcelColumnName("2")]
         public double Day2 { get; set; }
         [ExcelColumnName("3")]
-        public double Da3 { get; set; }
+        public double Day3 { get; set; }
         [ExcelColumnName("4")]
         public double Day4 { get; set; }
         [ExcelColumnName("5")]

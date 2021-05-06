@@ -16,7 +16,7 @@ namespace YiSha.Util.MiniExcel.Model
         [ExcelColumnName("2")]
         public string Day2 { get; set; }
         [ExcelColumnName("3")]
-        public string Da3 { get; set; }
+        public string Day3 { get; set; }
         [ExcelColumnName("4")]
         public string Day4 { get; set; }
         [ExcelColumnName("5")]
@@ -104,7 +104,7 @@ namespace YiSha.Util.MiniExcel.Model
         [ExcelColumnName("外出")]
         public double GoOut { get; set; }
         [ExcelColumnName("出差")]
-        public double evection { get; set; }
+        public double Evection { get; set; }
         [ExcelColumnName("加班")]
         public double Overtime { get; set; }
         [ExcelColumnName("病假零星")]
@@ -148,7 +148,7 @@ namespace YiSha.Util.MiniExcel.Model
         [ExcelColumnName("平加")]
         public double FlatAnd { get; set; }
         [ExcelColumnName("延时")]
-        public double delayed { get; set; }
+        public double Delayed { get; set; }
         [ExcelColumnName("餐补天数")]
         public double MealForDays { get; set; }
     }

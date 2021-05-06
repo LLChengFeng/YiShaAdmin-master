@@ -5,7 +5,7 @@
         <div class="select-list">
             <ul>
                 <li>
-                    导入月份考勤数据
+                    <h3>导入月份考勤数据</h3>
                 </li>
                 <li>
                     <a id="btnImport" class="btn btn-success" onclick="importForm()"><i class="fa fa-upload"></i> 导入</a>
@@ -15,6 +15,7 @@
     </div>
     <div>
         <div class="btn-group-sm toolbar" id="toolbar1">
+            <h2>考勤</h2>
         </div>
         <div class="col-sm-12 select-table table-bordered">
             <table id="gridTable1" data-mobile-responsive="true"></table>
@@ -23,6 +24,7 @@
 
     <div>
         <div class="btn-group-sm toolbar" id="toolbar2">
+            <h2>加班</h2>
         </div>
         <div class="col-sm-12 select-table table-bordered">
             <table id="gridTable2" data-mobile-responsive="true"></table>
@@ -30,7 +32,8 @@
     </div>
 
     <div>
-        <div class="btn-group-sm toolbar" id="toolbar2">
+        <div class="btn-group-sm toolbar" id="toolbar3">
+            <h2>年假同一天工时</h2>
         </div>
         <div class="col-sm-12 select-table table-bordered">
             <table id="gridTable3" data-mobile-responsive="true"></table>
@@ -38,7 +41,8 @@
     </div>
 
     <div>
-        <div class="btn-group-sm toolbar" id="toolbar2">
+        <div class="btn-group-sm toolbar" id="toolbar4">
+            <h2>事假</h2>
         </div>
         <div class="col-sm-12 select-table table-bordered">
             <table id="gridTable4" data-mobile-responsive="true"></table>
@@ -46,7 +50,8 @@
     </div>
 
     <div>
-        <div class="btn-group-sm toolbar" id="toolbar2">
+        <div class="btn-group-sm toolbar" id="toolbar5">
+            <h2>病假</h2>
         </div>
         <div class="col-sm-12 select-table table-bordered">
             <table id="gridTable5" data-mobile-responsive="true"></table>
@@ -60,18 +65,92 @@
     });
 
     function initGrid() {
-        var queryUrl = '@Url.Content("~/DemoManage/Table/GetPageListJson")';
+        var queryUrl1 = '@Url.Content("~/AttendanceManagement/ImporttAttendance/GetClockingInListJson")';
+        var queryUrl2 = '@Url.Content("~/AttendanceManagement/ImporttAttendance/GetJobOvertimePageListJson")';
+        var queryUrl3 = '@Url.Content("~/AttendanceManagement/ImporttAttendance/GetLeaveForPersonalAffairsPageListJson")';
+        var queryUrl4 = '@Url.Content("~/AttendanceManagement/ImporttAttendance/GetSameWorkingHourForAnnualLeavePageListJson")';
+        var queryUrl5 = '@Url.Content("~/AttendanceManagement/ImporttAttendance/GetSickLeavePageListJson")';
+
         $('#gridTable1').ysTable({
-            url: queryUrl,
+            url: queryUrl1,
             toolbar: '#toolbar1',
-            pageSize: 3,
+            pageSize: 5,
             columns: [
                 [
-                    { checkbox: true },
-                    { field: 'Id', title: '用户ID' },
-                    { field: 'RealName', title: '用户姓名' },
-                    { field: 'Mobile', title: '用户手机' },
-                    { field: 'Email', title: '邮箱' },
+                    //{ checkbox: true },
+                    //{ field: 'Id', title: '用户ID' },
+                    { field: 'JobNumber', title: '工号Id' },
+                    { field: 'Name', title: '姓名' },
+                    { field: 'Day1', title: '1' },
+                    { field: 'Day2', title: '2' },
+                    { field: 'Day3', title: '3' },
+                    { field: 'Day4', title: '4' },
+                    { field: 'Day5', title: '5' },
+                    { field: 'Day6', title: '6' },
+                    { field: 'Day7', title: '7' },
+                    { field: 'Day8', title: '8' },
+                    { field: 'Day9', title: '9' },
+                    { field: 'Day10', title: '10' },
+                    { field: 'Day11', title: '11' },
+                    { field: 'Day12', title: '12' },
+                    { field: 'Day13', title: '13' },
+                    { field: 'Day14', title: '14' },
+                    { field: 'Day15', title: '15' },
+                    { field: 'Day16', title: '16' },
+                    { field: 'Day17', title: '17' },
+                    { field: 'Day18', title: '18' },
+                    { field: 'Day19', title: '19' },
+                    { field: 'Day20', title: '20' },
+                    { field: 'Day21', title: '21' },
+                    { field: 'Day22', title: '22' },
+                    { field: 'Day23', title: '23' },
+                    { field: 'Day24', title: '24' },
+                    { field: 'Day25', title: '25' },
+                    { field: 'Day26', title: '26' },
+                    { field: 'Day27', title: '27' },
+                    { field: 'Day28', title: '28' },
+                    { field: 'Day29', title: '29' },
+                    { field: 'Day30', title: '30' },
+                    { field: 'Day31', title: '31' },
+                    { field: 'Other', title: '其他' },
+                    { field: 'HalfAYear', title: '1/2年' },
+                    { field: 'Oftemn', title: '常' },
+                    { field: 'DayT', title: '白' },
+                    { field: 'Night', title: '夜' },
+                    { field: 'Year', title: '年' },
+                    { field: 'LeavePersonalAffairs', title: '事假' },
+                    { field: 'SickLeave', title: '病假' },
+                    { field: 'PrenatalCheckUpLeave', title: '产检假' },
+                    { field: 'MaternityLeave', title: '产假' },
+                    { field: 'BreastfeedingLeave', title: '哺乳假' },
+                    { field: 'LeaveOfAbsenceToAttendToPublicAffairs', title: '公假' },
+                    { field: 'FuneralLeave', title: '丧假' },
+                    { field: 'NursingLeave', title: '护理假' },
+                    { field: 'GoOut', title: '外出' },
+                    { field: 'Evection', title: '出差' },
+                    { field: 'Overtime', title: '加班' },
+                    { field: 'SickLeaveSporadic', title: '病假零星' },
+                    { field: 'PrivateAffairLeaveSporadic', title: '事假零星' },
+                    { field: 'SickLeaveInTheEnd', title: '病假最终' },
+                    { field: 'PersonalLeaveInTheEnd', title: '事假最终' },
+                    { field: 'SameWorkingHourForAnnualLeave', title: '年假同一天工时' },
+                    { field: 'TotalProductiveHours', title: '总工时' },
+                    { field: 'HolidayWorkingHoursShouldBeAddedOrReduced', title: '应加应减节假日工时' },
+                    { field: 'DistinguishBetweenRegularAndShiftHours', title: '区分常日与倒班' },
+                    { field: 'RegularDayShiftShouldBeWorkingHours', title: '常日班应上工时' },
+                    { field: 'ShiftWorkShouldBeDone', title: '倒班应上工时' },
+                    { field: 'OvertimeWorkingHoursIncludingHolidays', title: '常日班加班工时(含节假日)' },
+                    { field: 'OvertimeOnShiftsincludingHolidays', title: '倒班加班工时（含节假日）' },
+                    { field: 'Particularlyday12', title: '12号' },
+                    { field: 'Particularlyday13', title: '13号' },
+                    { field: 'Particularlyday14', title: '14号' },
+                    { field: 'TheNightShiftBeforeTheHoliday', title: '节假日前那一天夜班' },
+                    { field: 'TheHoliday', title: '节假' },
+                    { field: 'OvertimeOnShiftsExcludingHolidays', title: '倒班加班工时（不含节假日）' },
+                    { field: 'OvertimeWorkingHoursExcludingHolidays', title: '常日班加班工时（不含节假日）' },
+                    { field: 'FlatAnd', title: '平加' },
+                    { field: 'Delayed', title: '延时' },
+                    { field: 'MealForDays', title: '餐补天数' },
                     {
                         title: '操作',
                         align: 'center',
@@ -85,23 +164,54 @@
                 ]
             ],
             queryParams: function (params) {
-                var pagination = $('#gridTable').ysTable('getPagination', params);
+                var pagination = $('#gridTable1').ysTable('getPagination', params);
                 var queryString = $('#searchDiv').getWebControls(pagination);
                 return queryString;
             }
         });
 
         $('#gridTable2').ysTable({
-            url: queryUrl,
+            url: queryUrl2,
             toolbar: '#toolbar2',
             pageSize: 5,
             columns: [
                 [
-                    { checkbox: true },
-                    { field: 'Id', title: '用户ID' },
-                    { field: 'RealName', title: '用户姓名' },
-                    { field: 'Mobile', title: '用户手机' },
-                    { field: 'Email', title: '邮箱' },
+                    //{ checkbox: true },
+                    //{ field: 'Id', title: '用户ID' },
+                    { field: 'JobNumber', title: '工号Id' },
+                    { field: 'Name', title: '姓名' },
+                    { field: 'Day1', title: '1' },
+                    { field: 'Day2', title: '2' },
+                    { field: 'Day3', title: '3' },
+                    { field: 'Day4', title: '4' },
+                    { field: 'Day5', title: '5' },
+                    { field: 'Day6', title: '6' },
+                    { field: 'Day7', title: '7' },
+                    { field: 'Day8', title: '8' },
+                    { field: 'Day9', title: '9' },
+                    { field: 'Day10', title: '10' },
+                    { field: 'Day11', title: '11' },
+                    { field: 'Day12', title: '12' },
+                    { field: 'Day13', title: '13' },
+                    { field: 'Day14', title: '14' },
+                    { field: 'Day15', title: '15' },
+                    { field: 'Day16', title: '16' },
+                    { field: 'Day17', title: '17' },
+                    { field: 'Day18', title: '18' },
+                    { field: 'Day19', title: '19' },
+                    { field: 'Day20', title: '20' },
+                    { field: 'Day21', title: '21' },
+                    { field: 'Day22', title: '22' },
+                    { field: 'Day23', title: '23' },
+                    { field: 'Day24', title: '24' },
+                    { field: 'Day25', title: '25' },
+                    { field: 'Day26', title: '26' },
+                    { field: 'Day27', title: '27' },
+                    { field: 'Day28', title: '28' },
+                    { field: 'Day29', title: '29' },
+                    { field: 'Day30', title: '30' },
+                    { field: 'Day31', title: '31' },
+                    { field: 'Total', title: '合计' },
                     {
                         title: '操作',
                         align: 'center',
@@ -115,14 +225,206 @@
                 ]
             ],
             queryParams: function (params) {
-                var pagination = $('#gridTable').ysTable('getPagination', params);
+                var pagination = $('#gridTable2').ysTable('getPagination', params);
+                var queryString = $('#searchDiv').getWebControls(pagination);
+                return queryString;
+            }
+        });
+
+        $('#gridTable3').ysTable({
+            url: queryUrl3,
+            toolbar: '#toolbar3',
+            pageSize: 5,
+            columns: [
+                [
+                    //{ checkbox: true },
+                    //{ field: 'Id', title: '用户ID' },
+                    { field: 'JobNumber', title: '工号Id' },
+                    { field: 'Name', title: '姓名' },
+                    { field: 'Day1', title: '1' },
+                    { field: 'Day2', title: '2' },
+                    { field: 'Day3', title: '3' },
+                    { field: 'Day4', title: '4' },
+                    { field: 'Day5', title: '5' },
+                    { field: 'Day6', title: '6' },
+                    { field: 'Day7', title: '7' },
+                    { field: 'Day8', title: '8' },
+                    { field: 'Day9', title: '9' },
+                    { field: 'Day10', title: '10' },
+                    { field: 'Day11', title: '11' },
+                    { field: 'Day12', title: '12' },
+                    { field: 'Day13', title: '13' },
+                    { field: 'Day14', title: '14' },
+                    { field: 'Day15', title: '15' },
+                    { field: 'Day16', title: '16' },
+                    { field: 'Day17', title: '17' },
+                    { field: 'Day18', title: '18' },
+                    { field: 'Day19', title: '19' },
+                    { field: 'Day20', title: '20' },
+                    { field: 'Day21', title: '21' },
+                    { field: 'Day22', title: '22' },
+                    { field: 'Day23', title: '23' },
+                    { field: 'Day24', title: '24' },
+                    { field: 'Day25', title: '25' },
+                    { field: 'Day26', title: '26' },
+                    { field: 'Day27', title: '27' },
+                    { field: 'Day28', title: '28' },
+                    { field: 'Day29', title: '29' },
+                    { field: 'Day30', title: '30' },
+                    { field: 'Day31', title: '31' },
+                    { field: 'Total', title: '合计' },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs" href="#"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs" href="#"><i class="fa fa-remove"></i>删除</a>');
+                            return actions.join('');
+                        }
+                    }
+                ]
+            ],
+            queryParams: function (params) {
+                var pagination = $('#gridTable3').ysTable('getPagination', params);
+                var queryString = $('#searchDiv').getWebControls(pagination);
+                return queryString;
+            }
+        });
+
+        $('#gridTable4').ysTable({
+            url: queryUrl4,
+            toolbar: '#toolbar4',
+            pageSize: 5,
+            columns: [
+                [
+                    //{ checkbox: true },
+                    //{ field: 'Id', title: '用户ID' },
+                    { field: 'JobNumber', title: '工号Id' },
+                    { field: 'Name', title: '姓名' },
+                    { field: 'Day1', title: '1' },
+                    { field: 'Day2', title: '2' },
+                    { field: 'Day3', title: '3' },
+                    { field: 'Day4', title: '4' },
+                    { field: 'Day5', title: '5' },
+                    { field: 'Day6', title: '6' },
+                    { field: 'Day7', title: '7' },
+                    { field: 'Day8', title: '8' },
+                    { field: 'Day9', title: '9' },
+                    { field: 'Day10', title: '10' },
+                    { field: 'Day11', title: '11' },
+                    { field: 'Day12', title: '12' },
+                    { field: 'Day13', title: '13' },
+                    { field: 'Day14', title: '14' },
+                    { field: 'Day15', title: '15' },
+                    { field: 'Day16', title: '16' },
+                    { field: 'Day17', title: '17' },
+                    { field: 'Day18', title: '18' },
+                    { field: 'Day19', title: '19' },
+                    { field: 'Day20', title: '20' },
+                    { field: 'Day21', title: '21' },
+                    { field: 'Day22', title: '22' },
+                    { field: 'Day23', title: '23' },
+                    { field: 'Day24', title: '24' },
+                    { field: 'Day25', title: '25' },
+                    { field: 'Day26', title: '26' },
+                    { field: 'Day27', title: '27' },
+                    { field: 'Day28', title: '28' },
+                    { field: 'Day29', title: '29' },
+                    { field: 'Day30', title: '30' },
+                    { field: 'Day31', title: '31' },
+                    { field: 'Total', title: '合计' },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs" href="#"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs" href="#"><i class="fa fa-remove"></i>删除</a>');
+                            return actions.join('');
+                        }
+                    }
+                ]
+            ],
+            queryParams: function (params) {
+                var pagination = $('#gridTable4').ysTable('getPagination', params);
+                var queryString = $('#searchDiv').getWebControls(pagination);
+                return queryString;
+            }
+        });
+
+        $('#gridTable5').ysTable({
+            url: queryUrl5,
+            toolbar: '#toolbar5',
+            pageSize: 5,
+            columns: [
+                [
+                    //{ checkbox: true },
+                    //{ field: 'Id', title: '用户ID' },
+                    { field: 'JobNumber', title: '工号Id' },
+                    { field: 'Name', title: '姓名' },
+                    { field: 'Day1', title: '1' },
+                    { field: 'Day2', title: '2' },
+                    { field: 'Day3', title: '3' },
+                    { field: 'Day4', title: '4' },
+                    { field: 'Day5', title: '5' },
+                    { field: 'Day6', title: '6' },
+                    { field: 'Day7', title: '7' },
+                    { field: 'Day8', title: '8' },
+                    { field: 'Day9', title: '9' },
+                    { field: 'Day10', title: '10' },
+                    { field: 'Day11', title: '11' },
+                    { field: 'Day12', title: '12' },
+                    { field: 'Day13', title: '13' },
+                    { field: 'Day14', title: '14' },
+                    { field: 'Day15', title: '15' },
+                    { field: 'Day16', title: '16' },
+                    { field: 'Day17', title: '17' },
+                    { field: 'Day18', title: '18' },
+                    { field: 'Day19', title: '19' },
+                    { field: 'Day20', title: '20' },
+                    { field: 'Day21', title: '21' },
+                    { field: 'Day22', title: '22' },
+                    { field: 'Day23', title: '23' },
+                    { field: 'Day24', title: '24' },
+                    { field: 'Day25', title: '25' },
+                    { field: 'Day26', title: '26' },
+                    { field: 'Day27', title: '27' },
+                    { field: 'Day28', title: '28' },
+                    { field: 'Day29', title: '29' },
+                    { field: 'Day30', title: '30' },
+                    { field: 'Day31', title: '31' },
+                    { field: 'Total', title: '合计' },
+                    {
+                        title: '操作',
+                        align: 'center',
+                        formatter: function (value, row, index) {
+                            var actions = [];
+                            actions.push('<a class="btn btn-success btn-xs" href="#"><i class="fa fa-edit"></i>编辑</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs" href="#"><i class="fa fa-remove"></i>删除</a>');
+                            return actions.join('');
+                        }
+                    }
+                ]
+            ],
+            queryParams: function (params) {
+                var pagination = $('#gridTable5').ysTable('getPagination', params);
                 var queryString = $('#searchDiv').getWebControls(pagination);
                 return queryString;
             }
         });
     }
 
-        function importForm() {
+    function searchGrid() {
+        $('#gridTable1').ysTable('search');
+        $('#gridTable2').ysTable('search');
+        $('#gridTable3').ysTable('search');
+        $('#gridTable4').ysTable('search');
+        $('#gridTable5').ysTable('search');
+        resetToolbarStatus();
+    }
+
+    function importForm() {
               ys.openDialog({
                     title: "导入用户数据",
                     content: '@Url.Content("~/AttendanceManagement/ImporttAttendance/AttendanceUserImport")',

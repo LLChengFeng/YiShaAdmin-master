@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  yisha.admin.web:
+    image: ${DOCKER_REGISTRY-}yishaadminweb
+    build:
+      context: .
+      dockerfile: YiSha.Web/YiSha.Admin.Web/Dockerfile

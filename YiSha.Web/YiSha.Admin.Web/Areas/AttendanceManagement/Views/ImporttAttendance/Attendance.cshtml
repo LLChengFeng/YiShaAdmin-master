@@ -2,13 +2,23 @@
 
 <div class="container-div">
     <div id="searchDiv" class="col-sm-12 search-collapse">
-        <div class="select-list">
+        <div class="col-sm-6 select-list">
             <ul>
                 <li>
                     <h3>导入月份考勤数据</h3>
                 </li>
                 <li>
-                    <a id="btnImport" class="btn btn-success" onclick="importForm()"><i class="fa fa-upload"></i> 导入</a>
+                    <a id="btnImport" class="btn btn-success" onclick="importForm(0)"><i class="fa fa-upload"></i> 导入</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-6 select-list">
+            <ul>
+                <li>
+                    <h3>导入员工组织关系数据</h3>
+                </li>
+                <li>
+                    <a id="btnImport" class="btn btn-success" onclick="importForm(1)"><i class="fa fa-upload"></i> 导入</a>
                 </li>
             </ul>
         </div>
@@ -424,10 +434,10 @@
         resetToolbarStatus();
     }
 
-    function importForm() {
+    function importForm(imporType) {
               ys.openDialog({
-                    title: "导入用户数据",
-                    content: '@Url.Content("~/AttendanceManagement/ImporttAttendance/AttendanceUserImport")',
+                  title: "导入用户数据",
+                  content: '@Url.Content("~/AttendanceManagement/ImporttAttendance/AttendanceUserImport?imaType:")' + imporType,
                     height: "280px",
                     callback: function (index, layero) {
                         var iframeWin = window[layero.find('iframe')[0]['name']];

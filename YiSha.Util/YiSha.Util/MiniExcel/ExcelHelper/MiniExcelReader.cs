@@ -93,5 +93,21 @@ namespace YiSha.Util.MiniExcel.ExcelHelper
                 return rows;
             }
         }
+
+        /// <summary>
+        /// 读取开启记录从excel
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static List<EmployeeOrganizationalRelationsModel> ReadEmployeeOrganizationalRelationsModelExcel(string filePath)
+        {
+            string absoluteFilePath = GlobalContext.HostingEnvironment.ContentRootPath + filePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+            using (var stream = File.OpenRead(absoluteFilePath))
+            {
+                var rows = stream.Query<EmployeeOrganizationalRelationsModel>(null,ExcelType.XLSX).ToList();
+                rows = rows.Where(e => !string.IsNullOrEmpty(e.Name) & e.JobNumber != 0).ToList();
+                return rows;
+            }
+        }
     }
 }

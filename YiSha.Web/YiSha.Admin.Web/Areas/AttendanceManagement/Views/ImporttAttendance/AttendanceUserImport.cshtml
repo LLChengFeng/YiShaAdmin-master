@@ -33,7 +33,20 @@
 </div>
 
 <script type="text/javascript">
-    var filePath = undefined;
+    var filePath = undefined; ImporType
+    @{
+        var saveUrl = string.Empty;
+        var imporType = (ViewBag.ImporType as int?) ?? 0;
+        switch (imporType)
+        {
+            case 0:
+                saveUrl = Url.Content("~/AttendanceManagement/ImporttAttendance/ImportAttendance");
+                break;
+            case 1:
+                saveUrl = Url.Content("~/AttendanceManagement/ImporttAttendance/ImportAttendanceDepartEmployee");
+                break;
+        }
+     };
     $(document).ready(function () {
         //$("#isOverride").ysCheckBox({
         //    data: [{ Key: '1', Value: '是否更新已经存在的用户数据' }]
@@ -64,7 +77,7 @@
         var postData =$("#form").getWebControls();
         postData.FilePath = filePath;
         ys.ajax({
-            url: '@Url.Content("~/AttendanceManagement/ImporttAttendance/ImportAttendance")',
+            url: '@Html.Raw(saveUrl)',
             type: "post",
             data: postData,
             success: function (obj) {

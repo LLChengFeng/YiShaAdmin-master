@@ -30,11 +30,17 @@ namespace YiSha.Admin.Web.Areas.AttendanceManagement.Controllers
             return View();
         }
 
-        public IActionResult AttendanceUserImport()
+        public IActionResult AttendanceUserImport(int imporType)
         {
+            ViewBag.ImporType = imporType;
             return View();
         }
 
+        /// <summary>
+        /// 导本月考勤数据表
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ImportAttendance(ImportParam param)
         {
@@ -81,6 +87,18 @@ namespace YiSha.Admin.Web.Areas.AttendanceManagement.Controllers
             }
             //TData obj = await userBLL.ImportUser(param, list);
             return Json(data);
+        }
+
+        /// <summary>
+        /// 插入员工对应的部门组织班组信息，并且更新部门管理表数据
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> ImportAttendanceDepartEmployee(ImportParam param)
+        {
+            var obj= await importtAttendanceBll.ImportEmployeeOrganizationalRelations(param.FilePath);
+            return Json(obj);
         }
 
         [HttpGet]

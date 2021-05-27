@@ -437,7 +437,7 @@
     function importForm(imporType) {
               ys.openDialog({
                   title: "导入用户数据",
-                  content: '@Url.Content("~/AttendanceManagement/ImporttAttendance/AttendanceUserImport?imaType:")' + imporType,
+                  content: '@Url.Content("~/AttendanceManagement/ImporttAttendance/AttendanceUserImport?imporType=")' + imporType,
                     height: "280px",
                     callback: function (index, layero) {
                         var iframeWin = window[layero.find('iframe')[0]['name']];

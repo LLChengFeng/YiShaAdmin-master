@@ -17,39 +17,8 @@ namespace YiSha.Util.MiniExcel.Model
         public string AdministrativeOffice { get; set; }
         [ExcelColumnName("班组")]
         public string TeamOrGroup { get; set; }
-        public string DepartmentID { get; set; }
-        public string AdministrativeOfficeID { get; set; }
-        public string TeamOrGroupID { get; set; }
-
-        #region 用于循环遍历的字段     
-        /// <summary>
-        /// 真实的ID
-        /// </summary>
-        public long? Id { get; set; }
-
-        /// <summary>
-        /// 真实的ID
-        /// </summary>
-        public long? ParentId { get; set; }
-
-        /// <summary>
-        /// 用于模拟关系的id
-        /// </summary>
-        public Guid AdministrativeOfficeId { get; set; }
-
-        /// <summary>
-        /// 用于模拟关系的id
-        /// </summary>
-        public Guid DepartmentId { get; set; }
-        /// <summary>
-        /// 用于模拟关系的id
-        /// </summary>
-        public Guid TeamOrGroupId { get; set; }
-
-        /// <summary>
-        /// 模拟的父ID
-        /// </summary>
-        public Guid DParentId { get; set; }
-        #endregion
+        public long? DepartmentID { get; set; }
+        public long? AdministrativeOfficeID { get; set; }
+        public long? TeamOrGroupID { get; set; }
     }
 }

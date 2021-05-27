@@ -25,12 +25,12 @@ namespace YiSha.Business.AttendanceManagement
         private SickLeaveService sickLeaveService = new SickLeaveService();
         private DataDictService dataDictService = new DataDictService();
         private DataDictDetailService dataDictDetailService = new DataDictDetailService();
-        private UserService userService = new UserService();
+        private EmployeePositionRelationshipService employeePositionRelationshipService = new EmployeePositionRelationshipService();
 
         #region 导入数据方法
         public async Task<TData> ImportClockingIn(ImportParam param, List<ClockingInEntity> list)
         {
-            var obj= await clockingInService.SaveFormList(param,list);
+            var obj = await clockingInService.SaveFormList(param, list);
             return obj;
         }
 
@@ -60,7 +60,7 @@ namespace YiSha.Business.AttendanceManagement
         #endregion
 
         #region 查询
-        public async  Task<TData<List<ClockingInEntity>>> GetClockingInPageList(ListParam param, Pagination pagination)
+        public async Task<TData<List<ClockingInEntity>>> GetClockingInPageList(ListParam param, Pagination pagination)
         {
             var obj = new TData<List<ClockingInEntity>>();
             var list = await clockingInService.GetPageList(param, pagination);
@@ -127,97 +127,114 @@ namespace YiSha.Business.AttendanceManagement
             var DepartmentList = data.GroupBy(e => e.Department).Select(e =>
               new
               {
-                  Department = e.Key,
-                  Did = Guid.NewGuid()
+                  Department = e.Key
               });
 
             //科室
             var AdministrativeOfficeList = data.GroupBy(e => e.AdministrativeOffice).Select(e =>
               new
               {
-                  AdministrativeOffice = e.Key,
-                  Did = Guid.NewGuid()
+                  AdministrativeOffice = e.Key
               });
 
             //班组
             var TeamOrGroupList = data.GroupBy(e => e.TeamOrGroup).Select(e =>
               new
               {
-                  TeamOrGroup = e.Key,
-                  Did = Guid.NewGuid()
+                  TeamOrGroup = e.Key
               });
-
-            //给原始list赋值
-            data.ForEach(a => {
-                var hde = DepartmentList.FirstOrDefault(e => e.Department == a.Department);
-                if (hde != null)
-                {
-                    a.DepartmentId = hde.Did;
-                    a.ParentId = 0;
-                }
-                var had = AdministrativeOfficeList.FirstOrDefault(e => e.AdministrativeOffice == a.AdministrativeOffice);
-                if (had != null)
-                {
-                    a.AdministrativeOfficeId = had.Did;
-                }
-                var hea = TeamOrGroupList.FirstOrDefault(e => e.TeamOrGroup == a.TeamOrGroup);
-                if (hea != null)
-                {
-                    a.TeamOrGroupId = hea.Did;
-                }
-            });
             #endregion
 
             #region 真实录入或者获取真实的部门Id
-            var num = 0;
+            var num = await dataDictDetailService.GetMaxSort();
             //插入数据到对应的字典
             var DataDictDetailEntityList = DepartmentList.Select((e, a) =>
                 new DataDictDetailEntity()
                 {
-                    DictKey = a++,
+                    DictKey = num++,
                     DictValue = e.Department,
-                    DictSort = a++,
+                    DictSort = num++,
                     DictType = "Department",
                     DictStatus = 1,
                     ListClass = "primary",
                     Remark = "部门类型"
                 }).ToList();
 
-            num = DataDictDetailEntityList.Count;
+            num += DataDictDetailEntityList.Count;
 
-            DataDictDetailEntityList.AddRange(AdministrativeOfficeList.Select((e, a) =>
-               new DataDictDetailEntity
-               {
-                   DictKey = num + a++,
-                   DictValue = e.AdministrativeOffice,
-                   DictSort = num + a++,
-                   DictType = "AdministrativeOffice",
-                   DictStatus = 1,
-                   ListClass = "primary",
-                   Remark = "科室类型"
-               }));
+            foreach (var item in DataDictDetailEntityList)
+            {
+                await dataDictDetailService.SaveForm(item);
+            }
 
-            num = DataDictDetailEntityList.Count;
-            DataDictDetailEntityList.AddRange(TeamOrGroupList.Select((e, a) =>
-               new DataDictDetailEntity
-               {
-                   DictKey = num + a++,
-                   DictValue = e.TeamOrGroup,
-                   DictSort = num + a++,
-                   DictType = "TeamOrGroup",
-                   DictStatus = 1,
-                   ListClass = "primary",
-                   Remark = "班组类型"
-               }));
+            var DataDictDetailEntityList1 = (AdministrativeOfficeList.Select((e, a) =>
+                 new DataDictDetailEntity
+                 {
+                     DictKey = num + a++,
+                     DictValue = e.AdministrativeOffice,
+                     DictSort = num + a++,
+                     DictType = "AdministrativeOffice",
+                     DictStatus = 1,
+                     ListClass = "primary",
+                     Remark = "科室类型"
+                 }));
+
+            foreach (var item in DataDictDetailEntityList1)
+            {
+                await dataDictDetailService.SaveForm(item);
+            }
+
+            num += DataDictDetailEntityList.Count;
+            var DataDictDetailEntityList2 = (TeamOrGroupList.Select((e, a) =>
+                 new DataDictDetailEntity
+                 {
+                     DictKey = num + a++,
+                     DictValue = e.TeamOrGroup,
+                     DictSort = num + a++,
+                     DictType = "TeamOrGroup",
+                     DictStatus = 1,
+                     ListClass = "primary",
+                     Remark = "班组类型"
+                 }));
+
+            foreach (var item in DataDictDetailEntityList2)
+            {
+                await dataDictDetailService.SaveForm(item);
+            }
+
+            //更新模拟数据的对应id值
+            data.ForEach(e =>
+            {
+                var ma = DataDictDetailEntityList.FirstOrDefault(a => a.DictValue == e.Department);
+                if (ma != null)
+                {
+                    e.DepartmentID = ma.Id;
+                }
+                ma = DataDictDetailEntityList1.FirstOrDefault(a => a.DictValue == e.AdministrativeOffice);
+                if (ma != null)
+                {
+                    e.AdministrativeOfficeID = ma.Id;
+                }
+                ma = DataDictDetailEntityList2.FirstOrDefault(a => a.DictValue == e.TeamOrGroup);
+                if (ma != null)
+                {
+                    e.TeamOrGroupID = ma.Id;
+                }
+            });
+
+            //添加数据到用户对应关系表
+            var InsetData = data.Select(e => new EmployeePositionRelationshipEntity()
+            {
+                JobNumber = e.JobNumber,
+                Name = e.Name,
+                DepartmentID = e.DepartmentID,
+                AdministrativeOfficeID = e.AdministrativeOfficeID,
+                TeamOrGroupID = e.TeamOrGroupID
+            }).ToList();
+            reTdata = await employeePositionRelationshipService.SaveFormList(null, InsetData);
             #endregion
-
-
-
-
             return reTdata;
         }
-
-
         #endregion
     }
 }

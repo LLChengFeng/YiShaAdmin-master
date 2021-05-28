@@ -33,5 +33,22 @@ namespace YiSha.Entity.CheckingInModel
         /// </summary>
         /// <returns></returns>
         public long? TeamOrGroupID { get; set; }
+        
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        [NotMapped]
+        public string DepartmentName { get; set; }
+        /// <summary>
+        /// 科室
+        /// </summary>
+        [NotMapped]
+        public string AdministrativeOfficeName { get; set; }
+        /// <summary>
+        /// 班组
+        /// </summary>
+        [NotMapped]
+        public string TeamOrGroupName { get; set; }
+
     }
 }

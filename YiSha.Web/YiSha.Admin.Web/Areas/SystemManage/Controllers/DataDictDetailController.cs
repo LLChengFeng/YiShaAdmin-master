@@ -43,6 +43,15 @@ namespace YiSha.Admin.Web.Areas.SystemManage.Controllers
 
         [HttpGet]
         [AuthorizeFilter("system:datadict:search")]
+        public async Task<IActionResult> GetListJsonUrl(string dictType)
+        {
+            var parm = new DataDictDetailListParam() { DictType = dictType };
+            TData<List<DataDictDetailEntity>> obj = await dataDictDetailBLL.GetList(parm);
+            return Json(obj);
+        }
+
+        [HttpGet]
+        [AuthorizeFilter("system:datadict:search")]
         public async Task<IActionResult> GetPageListJson(DataDictDetailListParam param, Pagination pagination)
         {
             TData<List<DataDictDetailEntity>> obj = await dataDictDetailBLL.GetPageList(param, pagination);

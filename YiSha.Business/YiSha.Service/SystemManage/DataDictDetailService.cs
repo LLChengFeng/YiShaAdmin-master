@@ -34,6 +34,12 @@ namespace YiSha.Service.SystemManage
             return await this.BaseRepository().FindEntity<DataDictDetailEntity>(id);
         }
 
+        public async Task<DataDictDetailEntity> GetIsHadByDictValue(DataDictDetailListParam param)
+        {
+            var expression = ListFilter(param);
+            return await this.BaseRepository().FindEntity<DataDictDetailEntity>(expression);
+        }
+
         public async Task<int> GetMaxSort()
         {
             object result = await this.BaseRepository().FindObject("SELECT MAX(DictSort) FROM SysDataDictDetail");

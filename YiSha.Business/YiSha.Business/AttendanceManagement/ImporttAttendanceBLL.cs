@@ -7,6 +7,7 @@ using YiSha.Entity.CheckingInModel;
 using YiSha.Entity.OrganizationManage;
 using YiSha.Entity.SystemManage;
 using YiSha.Model.Param;
+using YiSha.Model.Param.SystemManage;
 using YiSha.Model.Param.ToolManage;
 using YiSha.Service.AttendanceManagement;
 using YiSha.Service.OrganizationManage;
@@ -164,10 +165,18 @@ namespace YiSha.Business.AttendanceManagement
 
             foreach (var item in DataDictDetailEntityList)
             {
-                await dataDictDetailService.SaveForm(item);
+                var vva = await dataDictDetailService.GetIsHadByDictValue(new DataDictDetailListParam() { DictValue = item.DictValue });
+                if (vva == null)
+                {
+                    await dataDictDetailService.SaveForm(item);
+                }
+                else
+                {
+                    item.Id = vva.Id;
+                }
             }
 
-            var DataDictDetailEntityList1 = (AdministrativeOfficeList.Select((e, a) =>
+            var DataDictDetailEntityList1 = AdministrativeOfficeList.Select((e, a) =>
                  new DataDictDetailEntity
                  {
                      DictKey = num + a++,
@@ -177,15 +186,23 @@ namespace YiSha.Business.AttendanceManagement
                      DictStatus = 1,
                      ListClass = "primary",
                      Remark = "科室类型"
-                 }));
+                 }).ToList();
 
             foreach (var item in DataDictDetailEntityList1)
             {
-                await dataDictDetailService.SaveForm(item);
+                var vva = await dataDictDetailService.GetIsHadByDictValue(new DataDictDetailListParam() { DictValue = item.DictValue });
+                if (vva == null)
+                {
+                    await dataDictDetailService.SaveForm(item);
+                }
+                else
+                {
+                    item.Id = vva.Id;
+                }
             }
 
             num += DataDictDetailEntityList.Count;
-            var DataDictDetailEntityList2 = (TeamOrGroupList.Select((e, a) =>
+            var DataDictDetailEntityList2 = TeamOrGroupList.Select((e, a) =>
                  new DataDictDetailEntity
                  {
                      DictKey = num + a++,
@@ -195,11 +212,19 @@ namespace YiSha.Business.AttendanceManagement
                      DictStatus = 1,
                      ListClass = "primary",
                      Remark = "班组类型"
-                 }));
+                 }).ToList();
 
             foreach (var item in DataDictDetailEntityList2)
             {
-                await dataDictDetailService.SaveForm(item);
+                var vva = await dataDictDetailService.GetIsHadByDictValue(new DataDictDetailListParam() { DictValue = item.DictValue });
+                if (vva == null)
+                {
+                    await dataDictDetailService.SaveForm(item);
+                }
+                else
+                {
+                    item.Id = vva.Id;
+                }
             }
 
             //更新模拟数据的对应id值

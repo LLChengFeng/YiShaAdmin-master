@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "~/Views/Shared/_FormWhite.cshtml";
+}
+
+<div class="wrapper animated fadeInRight">
+    <form id="form" class="form-horizontal m">
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">工号<font class="red"> *</font></label>
+            <div class="col-sm-8">
+                <input id="JobNumber" col="JobNumber" type="text" class="form-control" readonly="readonly" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">姓名<font class="red"> *</font></label>
+            <div class="col-sm-8">
+                <div>
+                    <input id="Name" col="Name" type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">部门</label>
+            <div class="col-sm-8">
+                <div id="DepartmentNameID" col="DepartmentNameID"></div>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 选择员工的部门</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">科室</label>
+            <div class="col-sm-8">
+                <div id="AdministrativeOfficeNameID" col="AdministrativeOfficeNameID"></div>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 选择员工的科室</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label ">班组</label>
+            <div class="col-sm-8">
+                <div id="TeamOrGroupNameID" col="TeamOrGroupNameID"></div>
+                <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 选择员工的班组</span>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var id = ys.request("id");
+    $(function () {
+        $("#DepartmentNameID").ysComboBox({
+            url: '@Url.Content("~/SystemManage/DataDictDetail/GetListJsonUrl?dictType=Department")',
+            key: "Id",
+            value: "DictValue",
+            class: "form-control",
+            multiple: false
+         });
+
+        $("#AdministrativeOfficeNameID").ysComboBox({
+            url: '@Url.Content("~/SystemManage/DataDictDetail/GetListJsonUrl?dictType=AdministrativeOffice")',
+
+            key: "Id",
+            value: "DictValue",
+            class: "form-control",
+            multiple: false
+         });
+
+        $("#TeamOrGroupNameID").ysComboBox({
+            url: '@Url.Content("~/SystemManage/DataDictDetail/GetListJsonUrl?dictType=TeamOrGroup")',
+            key: "Id",
+            value: "DictValue",
+            class: "form-control",
+            multiple: false
+        });
+
+        getForm();
+
+        $("#form").validate({
+            rules: {
+                JobNumber: { required: true, digits: true },
+                Name: { required: true }
+            }
+        });
+    });
+
+    function getForm() {
+        if (id > 0) {
+            ys.ajax({
+                url: '@Url.Content("~/AttendanceManagement/EmployeePositionRelationship/GetFormJson")' + '?id=' + id,
+                type: "get",
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        $("#form").setWebControls(obj.Data);
+                    }
+                }
+            });
+        } else {
+            $("#JobNumber").attr("readonly", false);
+        }
+    }
+
+    function saveForm(index) {
+        if ($("#form").validate().form()) {
+            var postData = $("#form").getWebControls({ Id: id });
+            ys.ajax({
+                url: '@Url.Content("~/AttendanceManagement/EmployeePositionRelationship/SaveFormJson")',
+                type: "post",
+                data: postData,
+                success: function (obj) {
+                    if (obj.Tag == 1) {
+                        if (top.initDataDict) {
+                            top.initDataDict();
+                        }
+                        ys.msgSuccess(obj.Message);
+                        parent.searchGrid();
+                        parent.layer.close(index);
+                    }
+                    else {
+                        ys.msgError(obj.Message);
+                    }
+                }
+            });
+        }
+    }
+</script>
+

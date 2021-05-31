@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using YiSha.Util;
 
 namespace YiSha.Entity.CheckingInModel
 {
@@ -22,16 +24,19 @@ namespace YiSha.Entity.CheckingInModel
         /// 部门关联Id
         /// </summary>
         /// <returns></returns>
+        [JsonConverter(typeof(StringJsonConverter))]
         public long? DepartmentID { get; set; }
         /// <summary>
         /// 科室关联Id
         /// </summary>
         /// <returns></returns>
+        [JsonConverter(typeof(StringJsonConverter))]
         public long? AdministrativeOfficeID { get; set; }
         /// <summary>
         /// 组织关联Id
         /// </summary>
         /// <returns></returns>
+        [JsonConverter(typeof(StringJsonConverter))]
         public long? TeamOrGroupID { get; set; }
         
         /// <summary>

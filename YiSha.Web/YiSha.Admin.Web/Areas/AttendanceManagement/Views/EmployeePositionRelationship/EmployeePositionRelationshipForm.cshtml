@@ -21,21 +21,21 @@
         <div class="form-group">
             <label class="col-sm-3 control-label ">部门</label>
             <div class="col-sm-8">
-                <div id="DepartmentNameID" col="DepartmentNameID"></div>
+                <div id="departmentNameID" col="DepartmentNameID"></div>
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 选择员工的部门</span>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label ">科室</label>
             <div class="col-sm-8">
-                <div id="AdministrativeOfficeNameID" col="AdministrativeOfficeNameID"></div>
+                <div id="administrativeOfficeNameID" col="AdministrativeOfficeNameID"></div>
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 选择员工的科室</span>
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label ">班组</label>
             <div class="col-sm-8">
-                <div id="TeamOrGroupNameID" col="TeamOrGroupNameID"></div>
+                <div id="teamOrGroupNameID" col="TeamOrGroupNameID"></div>
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 选择员工的班组</span>
             </div>
         </div>
@@ -45,7 +45,7 @@
 <script type="text/javascript">
     var id = ys.request("id");
     $(function () {
-        $("#DepartmentNameID").ysComboBox({
+        $("#departmentNameID").ysComboBox({
             url: '@Url.Content("~/SystemManage/DataDictDetail/GetListJsonUrl?dictType=Department")',
             key: "Id",
             value: "DictValue",
@@ -53,16 +53,15 @@
             multiple: false
          });
 
-        $("#AdministrativeOfficeNameID").ysComboBox({
+        $("#administrativeOfficeNameID").ysComboBox({
             url: '@Url.Content("~/SystemManage/DataDictDetail/GetListJsonUrl?dictType=AdministrativeOffice")',
-
             key: "Id",
             value: "DictValue",
             class: "form-control",
             multiple: false
          });
 
-        $("#TeamOrGroupNameID").ysComboBox({
+        $("#teamOrGroupNameID").ysComboBox({
             url: '@Url.Content("~/SystemManage/DataDictDetail/GetListJsonUrl?dictType=TeamOrGroup")',
             key: "Id",
             value: "DictValue",
@@ -99,6 +98,7 @@
     function saveForm(index) {
         if ($("#form").validate().form()) {
             var postData = $("#form").getWebControls({ Id: id });
+            console.log(postData);
             ys.ajax({
                 url: '@Url.Content("~/AttendanceManagement/EmployeePositionRelationship/SaveFormJson")',
                 type: "post",

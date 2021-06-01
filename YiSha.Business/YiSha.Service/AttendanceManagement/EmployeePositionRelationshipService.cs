@@ -64,8 +64,8 @@ namespace YiSha.Service.AttendanceManagement
             }
             if (!string.IsNullOrEmpty(param.Name))
             {
-                sql.Append(" AND em.`Name` LIKE '@Name%' ");
-                dbParam.Add(DbParameterExtension.CreateDbParameter("@Name", param.Name));
+                sql.Append($" AND em.`Name` LIKE '{param.Name}%' ");
+                //dbParam.Add(DbParameterExtension.CreateDbParameter("@Name", param.Name));
             }
             var list = await this.BaseRepository().FindList<EmployeePositionRelationshipEntity>(sql.ToString(), dbParam.ToArray(), pagination);
             return list.ToList();

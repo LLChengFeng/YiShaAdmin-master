@@ -14,13 +14,13 @@
             <div class="select-list">
                 <ul>
                     <li>
-                        工号：<input id="jobNumber" col="JobNumber" type="text" />
+                        工号：<input id="JobNumber" col="JobNumber" type="text" />
                     </li>
                     <li>
-                        姓名：<input id="name" col="Name" type="text" />
+                        姓名：<input id="Name" col="Name" type="text" />
                     </li>
                     <li>
-                        <a id="btnSearch" class="btn btn-primary btn-sm" onclick="searchTreeGrid()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                        <a id="btnSearch" class="btn btn-primary btn-sm" onclick="searchGrid()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                     </li>
                 </ul>
             </div>
@@ -71,7 +71,6 @@
 
     function searchGrid() {
         $('#gridTable').ysTable('search');
-        resetToolbarStatus();
     }
 
     function showSaveForm(bAdd) {
